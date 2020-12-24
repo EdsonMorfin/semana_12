@@ -68,5 +68,19 @@ defmodule Pares do
       _ -> :error
     end
   end
+end
 
+defmodule Promedio do
+  def nrandom do
+    n1=IO.gets("Introduce el primer numero: ")
+    |> String.trim
+    |> String.to_integer
+  end
+
+  def sumaPromedio do
+    lista= for x <- 1..nrandom() do
+      Enum.random(0..10)
+    end
+    Enum.sum(par)
+  end
 end
