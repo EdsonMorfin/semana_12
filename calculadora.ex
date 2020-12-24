@@ -1,3 +1,7 @@
+defmodule Globales do
+
+end
+
 defmodule Calculadora do
   def capturar do
     operador=IO.gets("Introduce con simbolo la operacion que quieres realizar: ")
@@ -27,6 +31,7 @@ defmodule Calculadora do
   end
 end
 
+
 defmodule Rangos do
   def capturar do
     n1=IO.gets("Introduce el primer numero: ")
@@ -46,4 +51,22 @@ end
 
 defmodule Pares do
   def parimpar do
+    choice=IO.gets("Introduce si quieras par(P) o impar(IMP): ")
+    |> String.trim
+  end
+
+  def oddSplit do
+    require Integer
+    {n1,n2}=Rangos.capturar()
+    lista=Enum.to_list(n1..n2)
+    |>Enum.split_with(&Integer.is_even/1)
+    {par,impar}=lista
+    opcion=parimpar()
+    case opcion do
+      "P" -> Enum.sum(par)
+      "IMP" -> Enum.sum(impar)
+      _ -> :error
+    end
+  end
+
 end
