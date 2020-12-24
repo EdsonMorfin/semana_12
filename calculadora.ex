@@ -1,4 +1,13 @@
 defmodule Globales do
+  def capturar do
+    n1=IO.gets("Introduce el primer numero: ")
+    |> String.trim
+    |> String.to_integer
+    n2=IO.gets("Introduce el segundo numero: ")
+    |> String.trim
+    |>String.to_integer
+    {n1,n2}
+  end
 
 end
 
@@ -16,9 +25,6 @@ defmodule Calculadora do
     calculadora(operador,completo)
   end
 
-  def capturaroperador do
-    operador=IO.gets("Introduce con simbolo la operacion que quieres realizar: ")
-  end
   def calculadora(opcion,{n1,n2})do
     case opcion do
       "+" -> n1+n2
@@ -33,18 +39,8 @@ end
 
 
 defmodule Rangos do
-  def capturar do
-    n1=IO.gets("Introduce el primer numero: ")
-    |> String.trim
-    |> String.to_integer
-    n2=IO.gets("Introduce el segundo numero: ")
-    |> String.trim
-    |>String.to_integer
-    {n1,n2}
-  end
-
   def suma do
-    {n1,n2}=capturar()
+    {n1,n2}=Globales.capturar()
     sumatotal=Enum.sum(n1..n2)
   end
 end
@@ -53,11 +49,17 @@ defmodule Pares do
   def parimpar do
     choice=IO.gets("Introduce si quieras par(P) o impar(IMP): ")
     |> String.trim
+    |> String.upcase
+    unless choice=="P" or choice=="IMP" do
+      :error
+      parimpar()
+    end
+    choice
   end
 
   def oddSplit do
     require Integer
-    {n1,n2}=Rangos.capturar()
+    {n1,n2}=Globales.capturar()
     lista=Enum.to_list(n1..n2)
     |>Enum.split_with(&Integer.is_even/1)
     {par,impar}=lista
@@ -65,22 +67,30 @@ defmodule Pares do
     case opcion do
       "P" -> Enum.sum(par)
       "IMP" -> Enum.sum(impar)
-      _ -> :error
     end
   end
 end
 
 defmodule Promedio do
+
   def nrandom do
-    n1=IO.gets("Introduce el primer numero: ")
+    n1=IO.gets("Introduce el numero de parciales: ")
     |> String.trim
     |> String.to_integer
+    unless n1 > 1 do
+      nrandom()
+    end
+    n1
+
   end
 
   def sumaPromedio do
-    lista= for x <- 1..nrandom() do
+    n=nrandom()
+    lista= for x <- 1..n do
       Enum.random(0..10)
     end
-    Enum.sum(par)
+    IO.inspect(lista)
+    subtotal=Enum.sum(lista)
+    total=subtotal/n
   end
 end
